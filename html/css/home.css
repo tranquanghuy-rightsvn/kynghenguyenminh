@@ -16,6 +16,12 @@
 .s-home-1 > .sec-divider{height:6vw}
 .s-home-1 .sec-divider__fill{fill:#fff}
 .s-home-1 .sec-divider__line{stroke-width:15.0px}
+/* Khoảng tách 20px giữa hai section, luôn màu trắng.
+   Dùng padding chứ không dùng margin (margin để hở nền đen của <body>) và
+   cũng không dùng border (viền trắng + nền trắng là hai lớp tô riêng, gặp
+   toạ độ lẻ sẽ hở một vệt khử răng cưa nhìn như đường kẻ ngang).
+   padding được tô bằng chính background của section nên liền mạch. */
+.s-home-2{padding-top:20px}
 .s-home-1 .fluid{grid-template-rows:repeat(26,minmax(24px,auto))}
 @media(min-width:768px){.s-home-1 .fluid{grid-template-rows:repeat(17,minmax(calc(var(--container-width)*0.0215),auto))}}
 .b-home-intro-img img{object-position:50% 50%}

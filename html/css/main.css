@@ -327,7 +327,12 @@ main > .sec:first-child { padding-top: var(--header-h); }
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  /* -1px thay vì 0: chiều cao khối này là 6vw nên mép dưới hay rơi vào toạ độ
+     lẻ. Khi đó hàng pixel cuối của hình bị khử răng cưa, pha màu tô với nền
+     của chính section phía sau và hiện thành một đường kẻ mảnh chạy hết chiều
+     rộng. Đẩy xuống 1px để mép đó nằm trên section kế tiếp — vốn cùng màu với
+     phần tô — nên không còn nhìn thấy. */
+  bottom: -1px;
   width: 100%;
   z-index: 2;
   display: block;
