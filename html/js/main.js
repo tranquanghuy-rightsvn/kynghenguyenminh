@@ -5,6 +5,7 @@
   /* ---------- Mobile menu ---------- */
   var burger = document.querySelector('.burger');
   var body = document.body;
+  var root = document.documentElement;
 
   if (burger) {
     burger.addEventListener('click', function () {
@@ -93,6 +94,80 @@
     window.addEventListener('resize', function () {
       clearTimeout(t);
       t = setTimeout(fitScaledText, 100);
+    });
+  }
+
+  /* ---------- Hiệu ứng xuất hiện ----------
+     Mọi khối nội dung (chữ, ảnh, accordion, dòng liên hệ, bản đồ…) mờ dần và
+     trượt lên một chút khi cuộn tới. Các khối trong cùng một section lệch nhau
+     một nhịp nhỏ để tạo cảm giác nối tiếp. Chỉ chạy một lần cho mỗi khối. */
+  if (root.classList.contains('has-reveal')) {
+    var STEP = 70;      // độ trễ giữa các khối cùng nhóm (ms)
+    var MAX_STEP = 5;   // trễ tối đa, tránh khối cuối chờ quá lâu
+    var pending = [];
+
+    function mark(nodes, immediate) {
+      Array.prototype.forEach.call(nodes, function (el, i) {
+        el.classList.add('reveal');
+        el.style.transitionDelay = Math.min(i, MAX_STEP) * STEP + 'ms';
+        if (immediate) el.classList.add('is-in');
+        else pending.push(el);
+      });
+    }
+
+    // Header hiện ngay khi tải trang; phần còn lại hiện dần khi cuộn tới,
+    // đánh nhịp lại từ đầu ở mỗi section.
+    mark(document.querySelectorAll('.header__logo, .nav__item, .header__cta'), true);
+    document.querySelectorAll('.sec').forEach(function (sec) {
+      mark(sec.querySelectorAll('.fe'));
+    });
+    mark(document.querySelectorAll(
+      '.site-footer .flogo, .site-footer__rule, .fcontact__row,' +
+      '.site-footer__map, .site-footer__bar'));
+
+    // Quét bằng getBoundingClientRect thay vì IntersectionObserver: không có
+    // vùng chết ở đáy trang, và vẫn chạy đúng cả khi trang được mở ở tab nền
+    // (nơi requestAnimationFrame bị treo).
+    var last = 0;
+    function sweep() {
+      last = Date.now();
+      for (var i = pending.length - 1; i >= 0; i--) {
+        var el = pending[i];
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add('is-in');
+          pending.splice(i, 1);
+        }
+      }
+      if (!pending.length) {
+        window.removeEventListener('scroll', schedule);
+        window.removeEventListener('resize', schedule);
+      }
+    }
+    // Hãm bằng mốc thời gian chứ không dùng riêng setTimeout: trình duyệt bóp
+    // timer ở tab nền. Kèm một lượt quét đuôi để không bỏ sót lần cuộn cuối
+    // cùng — lần đó có thể rơi đúng vào khoảng đang bị hãm.
+    var trail;
+    function schedule() {
+      if (Date.now() - last >= 50) sweep();
+      clearTimeout(trail);
+      trail = setTimeout(sweep, 120);
+    }
+    sweep();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    document.addEventListener('visibilitychange', sweep);
+
+    // Lưới an toàn: nếu vì lý do nào đó hiệu ứng không chạy, bỏ luôn trạng thái
+    // ẩn để nội dung không bao giờ bị mất hút.
+    setTimeout(function () {
+      if (!document.querySelector('.reveal.is-in')) root.classList.remove('has-reveal');
+    }, 4000);
+
+    // Ảnh nền section: mờ dần khi ảnh tải xong
+    document.querySelectorAll('.sec-bg img').forEach(function (im) {
+      if (im.complete) im.classList.add('is-in');
+      else im.addEventListener('load', function () { im.classList.add('is-in'); });
     });
   }
 

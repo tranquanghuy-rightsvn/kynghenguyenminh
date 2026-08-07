@@ -862,6 +862,34 @@ body.menu-open { overflow: hidden; }
 .shape { width: 100%; height: 100%; }
 
 /* ==========================================================================
+   Hiệu ứng xuất hiện (fade + trượt lên nhẹ)
+   Trạng thái ẩn ban đầu chỉ áp dụng khi <html> có class .has-reveal — class
+   này do đoạn script nhỏ trong <head> gắn vào. Nhờ vậy nếu tắt JavaScript
+   thì nội dung vẫn hiện bình thường, không bị ẩn vĩnh viễn.
+   ========================================================================== */
+.has-reveal .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.has-reveal .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.75s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+/* ảnh nền của section: chỉ mờ dần, không trượt */
+.has-reveal .sec-bg img { opacity: 0; }
+.has-reveal .sec-bg img.is-in { opacity: 1; transition: opacity 1.1s ease; }
+
+/* khối trong header hiện ngay khi tải trang, trượt xuống thay vì lên */
+.has-reveal .header .reveal { transform: translateY(-10px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .has-reveal .reveal,
+  .has-reveal .sec-bg img { opacity: 1; transform: none; transition: none; }
+}
+
+/* ==========================================================================
    Utilities
    ========================================================================== */
 .center { text-align: center; }
