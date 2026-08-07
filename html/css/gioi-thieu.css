@@ -28,15 +28,3 @@
 @media(min-width:768px){.b-gt-img7{grid-area:7/20/23/26;justify-content:center}}
 .b-gt-body{grid-area:55/2/68/10;z-index:12;justify-content:flex-start}
 @media(min-width:768px){.b-gt-body{grid-area:24/9/37/25;justify-content:flex-start}}
-
-.s-footer-0 .fluid{--gap:0px}
-.s-footer-0 .fluid{grid-template-rows:repeat(24,minmax(24px,auto))}
-@media(min-width:768px){.s-footer-0 .fluid{grid-template-rows:repeat(20,minmax(calc(var(--container-width)*0.0215),auto))}}
-.b-ft-logo{grid-area:1/2/7/10;z-index:3}
-@media(min-width:768px){.b-ft-logo{grid-area:2/10/6/18;justify-content:center}}
-.b-ft-addr{grid-area:7/2/9/10;z-index:4;justify-content:flex-start}
-@media(min-width:768px){.b-ft-addr{grid-area:6/2/7/26;justify-content:flex-start}}
-.b-ft-links{grid-area:10/2/18/10;z-index:2}
-@media(min-width:768px){.b-ft-links{grid-area:7/2/11/26;justify-content:flex-start}}
-.b-ft-band{grid-area:18/2/24/10;z-index:5}
-@media(min-width:768px){.b-ft-band{grid-area:11/2/17/26;justify-content:center}}
