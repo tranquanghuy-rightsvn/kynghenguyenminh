@@ -1,0 +1,42 @@
+/* Giới thiệu — vị trí các khối trên lưới fluid */
+.s-gioi-thieu-0 .fluid{grid-template-rows:repeat(67,minmax(24px,auto))}
+@media(min-width:768px){.s-gioi-thieu-0 .fluid{grid-template-rows:repeat(37,minmax(calc(var(--container-width)*0.0215),auto))}}
+.b-gt-h2{grid-area:1/2/6/10;z-index:10;justify-content:flex-start}
+@media(min-width:768px){.b-gt-h2{grid-area:1/2/4/26;justify-content:flex-start}}
+.b-gt-lead{grid-area:7/2/13/10;z-index:9;justify-content:flex-start}
+@media(min-width:768px){.b-gt-lead{grid-area:4/5/7/23;justify-content:flex-start}}
+.b-gt-img1 img{object-position:50% 50%}
+.b-gt-img1{grid-area:13/2/19/10;z-index:2}
+@media(min-width:768px){.b-gt-img1{grid-area:7/8/23/14;justify-content:center}}
+.b-gt-img2 img{object-position:50% 50%}
+.b-gt-img2{grid-area:19/2/25/10;z-index:3}
+@media(min-width:768px){.b-gt-img2{grid-area:7/14/23/20;justify-content:center}}
+.b-gt-img3 img{object-position:50% 50%}
+.b-gt-img3{grid-area:25/2/31/10;z-index:5}
+@media(min-width:768px){.b-gt-img3{grid-area:7/2/16/8;justify-content:center}}
+.b-gt-img4 img{object-position:50% 50%}
+.b-gt-img4{grid-area:31/2/37/10;z-index:8}
+@media(min-width:768px){.b-gt-img4{grid-area:16/2/23/8;justify-content:center}}
+.b-gt-img5 img{object-position:50% 50%}
+.b-gt-img5{grid-area:37/2/43/10;z-index:7}
+@media(min-width:768px){.b-gt-img5{grid-area:23/2/31/8;justify-content:center}}
+.b-gt-img6 img{object-position:50% 50%}
+.b-gt-img6{grid-area:43/2/49/10;z-index:7}
+@media(min-width:768px){.b-gt-img6{grid-area:31/2/38/8;justify-content:center}}
+.b-gt-img7 img{object-position:50% 50%}
+.b-gt-img7{grid-area:49/2/55/10;z-index:8}
+@media(min-width:768px){.b-gt-img7{grid-area:7/20/23/26;justify-content:center}}
+.b-gt-body{grid-area:55/2/68/10;z-index:12;justify-content:flex-start}
+@media(min-width:768px){.b-gt-body{grid-area:24/9/37/25;justify-content:flex-start}}
+
+.s-footer-0 .fluid{--gap:0px}
+.s-footer-0 .fluid{grid-template-rows:repeat(24,minmax(24px,auto))}
+@media(min-width:768px){.s-footer-0 .fluid{grid-template-rows:repeat(20,minmax(calc(var(--container-width)*0.0215),auto))}}
+.b-ft-logo{grid-area:1/2/7/10;z-index:3}
+@media(min-width:768px){.b-ft-logo{grid-area:2/10/6/18;justify-content:center}}
+.b-ft-addr{grid-area:7/2/9/10;z-index:4;justify-content:flex-start}
+@media(min-width:768px){.b-ft-addr{grid-area:6/2/7/26;justify-content:flex-start}}
+.b-ft-links{grid-area:10/2/18/10;z-index:2}
+@media(min-width:768px){.b-ft-links{grid-area:7/2/11/26;justify-content:flex-start}}
+.b-ft-band{grid-area:18/2/24/10;z-index:5}
+@media(min-width:768px){.b-ft-band{grid-area:11/2/17/26;justify-content:center}}

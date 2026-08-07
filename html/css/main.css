@@ -1,0 +1,759 @@
+/* ==========================================================================
+   CÔNG TY TNHH KỸ NGHỆ NGUYỄN MINH
+   Shared styles (header, footer, grid, typography)
+   Plain CSS. No framework, no build step.
+   ========================================================================== */
+
+/* ---------- Fonts (self-hosted) ---------- */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/manrope-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/manrope-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/poppins-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/poppins-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/poppins-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/poppins-700-italic.woff2') format('woff2');
+}
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Bảng màu của site là cố định (đen / trắng / #d9d9d9). Khai báo này chặn
+     trình duyệt tự đảo màu bằng chế độ tối tự động. */
+  color-scheme: only light;
+
+  --page-padding: 2vw;
+  --mobile-page-padding: 6vw;
+  --max-page-width: 1800px;
+  --gap: 11px;
+
+  --accent: #d9d9d9;
+  --white: #fff;
+  --black: #000;
+
+  --heading-font: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+  --body-font: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --heading-weight: 500;
+  --heading-tracking: -0.02em;
+
+  --header-h: 154px;
+
+  /* fluid type scale values, straight from the source design system */
+  --v-h1: 4;
+  --v-h2: 2.8;
+  --v-h3: 2.2;
+  --v-h4: 1.6;
+  --v-large: 1.4;
+  --v-small: 0.9;
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--body-font);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5em;
+  color: var(--text-color, #000);
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; border: 0; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* ==========================================================================
+   Typography — fluid scale
+   size = min( (v-1)*1.2vw + 1rem , max( (v-1)*.012*maxW + 1rem , v*1rem ) )
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-tracking);
+  color: var(--heading-color, #000);
+  /* line-height shrinks slightly as the size value grows, matching the source */
+  line-height: calc(1.2em * (1 + (1 - var(--v)) / 25));
+}
+h1 { --v: var(--v-h1); }
+h2 { --v: var(--v-h2); }
+h3 { --v: var(--v-h3); }
+h4 { --v: var(--v-h4); }
+h5, h6 { --v: var(--v-h4); }
+
+p { margin: 0; }
+
+.t-large { --v: var(--v-large); }
+.t-small { --v: var(--v-small); }
+.t-large, .t-small { line-height: 1.5em; }
+
+@media screen and (max-width: 767px) and (orientation: portrait) {
+  h1, h2, h3, h4, h5, h6,
+  .t-large, .t-small {
+    font-size: calc((var(--v) - 1) * calc(0.012 * min(100vh, 900px)) + 1rem);
+  }
+}
+@media screen and (min-width: 768px), screen and (orientation: landscape) {
+  h1, h2, h3, h4, h5, h6,
+  .t-large, .t-small {
+    font-size: min(
+      calc((var(--v) - 1) * 1.2vw + 1rem),
+      max(
+        calc((var(--v) - 1) * 0.012 * var(--max-page-width) + 1rem),
+        calc(var(--v) * 1rem)
+      )
+    );
+  }
+}
+
+strong { font-weight: 700; }
+
+/* the editor emits pre-wrap so authored spacing/line breaks survive */
+.rte h1, .rte h2, .rte h3, .rte h4, .rte h5, .rte h6, .rte p { white-space: pre-wrap; }
+
+/* Rich-text flow: 16px rhythm between siblings, flush at the edges.
+   Scaled headline lines stack tight, so they are exempt. */
+.rte > *:not(.scaled) { margin: 16px 0; }
+.rte > *:first-child { margin-top: 0; }
+.rte > *:last-child { margin-bottom: 0; }
+.rte p:empty { height: 1.5em; }
+
+.rte pre,
+.rte code {
+  font-family: var(--body-font);
+  font-size: 1rem;
+  line-height: 1.5em;
+  /* wrap long lines instead of letting them escape the column */
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+/* editor text-colour spans */
+.c-accent { color: var(--accent); }
+.c-white { color: var(--white); }
+.c-black { color: var(--black); }
+
+.rte a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.rte a:hover { opacity: 0.7; }
+.rte ul, .rte ol { padding-left: 40px; }
+.rte ul { list-style: disc; }
+.rte ol { list-style: decimal; }
+.rte li { margin: 0; }
+.rte li + li { margin-top: 0.5em; }
+
+/* Headline lines that are scaled to fill their column (see js/main.js) */
+.scaled { display: block; }
+.rte .scaled > *,
+.scaled > * {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  /* must never wrap — the fit-to-width measurement depends on a single line */
+  white-space: pre;
+  transform-origin: left top;
+}
+
+/* ==========================================================================
+   Fluid grid — 8 columns on mobile, 24 on desktop, 11px gutters
+   ========================================================================== */
+.fluid {
+  display: grid;
+  position: relative;
+  --grid-gutter: calc(var(--mobile-page-padding) - var(--gap));
+  --cell-max-width: calc((var(--max-page-width) - (var(--gap) * 7)) / 8);
+  grid-template-columns:
+    minmax(var(--grid-gutter), 1fr)
+    repeat(8, minmax(0, var(--cell-max-width)))
+    minmax(var(--grid-gutter), 1fr);
+  grid-auto-rows: minmax(24px, auto);
+  gap: var(--gap);
+  overflow-x: clip;
+}
+
+@media (min-width: 768px) {
+  .fluid {
+    --grid-gutter: calc(var(--page-padding) - var(--gap));
+    --cell-max-width: calc((var(--max-page-width) - (var(--gap) * 23)) / 24);
+    --container-width: min(var(--max-page-width), calc(100vw - var(--page-padding) * 2));
+    grid-template-columns:
+      minmax(var(--grid-gutter), 1fr)
+      repeat(24, minmax(0, var(--cell-max-width)))
+      minmax(var(--grid-gutter), 1fr);
+    grid-auto-rows: minmax(calc(var(--container-width) * 0.0215), auto);
+  }
+}
+
+/* block content is vertically centred within its grid area */
+.fe { position: relative; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.fe > * { min-width: 0; }
+.fe--top { justify-content: flex-start; }
+/* blocks the source pins while their section scrolls past */
+.fe--sticky { position: sticky; top: calc(var(--header-h) + 20px); align-self: start; }
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+.sec {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.sec > .wrap { width: 100%; position: relative; z-index: 1; }
+
+.sec-bg { position: absolute; inset: 0; overflow: hidden; background: #000; }
+.sec-bg img { width: 100%; height: 100%; object-fit: cover; }
+/* black scrim over the background image; per-section opacity */
+.sec-bg__overlay { position: absolute; inset: 0; background: #000; }
+
+.h-small { min-height: 33vh; }
+.h-small > .wrap { padding: 3.3vmax 0; }
+.h-medium { min-height: 66vh; }
+.h-medium > .wrap { padding: 6.6vmax 0; }
+.h-custom > .wrap { padding: 0; }
+
+/* first section clears the fixed header */
+main > .sec:first-child { padding-top: var(--header-h); }
+
+/* Themes */
+.t-white,
+.t-white-bold { background: var(--white); --heading-color: #000; --text-color: #000; }
+.t-black { background: var(--black); --heading-color: #fff; --text-color: #fff; }
+.t-black-bold { background: var(--black); --heading-color: var(--accent); --text-color: #fff; }
+.t-bright-inverse { background: var(--black); --heading-color: var(--accent); --text-color: var(--accent); }
+.sec { color: var(--text-color); }
+
+/* Section divider: a band at the section's foot, filled with the *next*
+   section's colour and outlined, so the shape bites into this section.
+   Height, fill, stroke width and geometry come from the page stylesheet. */
+.sec-divider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 2;
+  display: block;
+  pointer-events: none;
+}
+.sec-divider__line { stroke: var(--heading-color, #d9d9d9); stroke-linecap: square; }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--body-font);
+  font-size: 1rem;
+  /* the source leaves buttons on the font's natural leading */
+  line-height: normal;
+  text-align: center;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 0;
+  padding: 16px 1.3em;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.btn:hover,
+.btn:focus-visible { background: var(--accent); color: #000; }
+
+/* A button placed as a grid block fills that block, and its height is governed
+   by the grid row rather than its own vertical padding. */
+.fe > .btn { width: 100%; height: 100%; padding-top: 0; padding-bottom: 0; }
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background: #000;
+  color: #fff;
+}
+/* logo | nav (right-aligned, 10vw lead-in) | CTA (10vw lead-in) */
+.header__inner {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--page-padding);
+  height: var(--header-h);
+}
+.header__logo { display: flex; align-items: center; flex: 0 0 auto; height: var(--header-h); }
+
+/* Word-mark lockup — set in the page's own webfonts so the Vietnamese
+   diacritics render correctly at any size (no bitmap logo to go fuzzy). */
+.logo { display: flex; align-items: center; gap: 16px; color: #fff; }
+.logo__mark {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  border: 2px solid var(--accent);
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: 25px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--accent);
+}
+.logo__lines { display: flex; flex-direction: column; gap: 3px; }
+.logo__eyebrow,
+.logo__tag {
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  opacity: 0.75;
+  white-space: nowrap;
+}
+.logo__name {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+.nav {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-left: 10vw;
+}
+.nav__item + .nav__item { margin-left: 5vw; }
+.nav__link,
+.nav__folder-btn {
+  display: inline-block;
+  font-family: var(--body-font);
+  font-size: 1rem;
+  line-height: 1.5em;
+  color: #fff;
+  padding: 1.6px 0;
+  white-space: nowrap;
+}
+.nav__link--active { border-bottom: 1px solid currentColor; }
+.nav__link:hover,
+.nav__folder-btn:hover { opacity: 0.7; }
+
+/* desktop dropdown */
+.nav__item--folder { position: relative; }
+.nav__folder {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  padding: 14px 0;
+  background: #000;
+  border: 1px solid rgba(217, 217, 217, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+.nav__item--folder:hover .nav__folder,
+.nav__item--folder:focus-within .nav__folder {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nav__folder a {
+  display: block;
+  padding: 8px 20px;
+  font-size: 1rem;
+  color: #fff;
+  white-space: nowrap;
+}
+.nav__folder a:hover { color: var(--accent); }
+
+.header__cta { flex: 0 0 auto; margin-left: 10vw; }
+
+/* burger */
+.burger {
+  display: none;
+  width: 34px;
+  height: 24px;
+  position: relative;
+  flex: 0 0 auto;
+}
+.burger span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.burger span:nth-child(1) { top: 0; }
+.burger span:nth-child(2) { top: 11px; }
+.burger span:nth-child(3) { top: 22px; }
+body.menu-open .burger span:nth-child(1) { transform: translateY(11px) rotate(45deg); }
+body.menu-open .burger span:nth-child(2) { opacity: 0; }
+body.menu-open .burger span:nth-child(3) { transform: translateY(-11px) rotate(-45deg); }
+
+/* mobile drawer */
+.mobile-nav {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  background: #000;
+  padding: calc(var(--header-h) + 24px) var(--mobile-page-padding) 40px;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+body.menu-open .mobile-nav { opacity: 1; visibility: visible; }
+body.menu-open { overflow: hidden; }
+.mobile-nav a,
+.mobile-nav .m-folder__btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 14px 0;
+  font-size: 1.25rem;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.m-folder__btn::after {
+  content: '';
+  float: right;
+  width: 8px;
+  height: 8px;
+  margin-top: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.m-folder.is-open .m-folder__btn::after { transform: rotate(-135deg); }
+.m-folder__list {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+}
+.m-folder.is-open .m-folder__list { grid-template-rows: 1fr; }
+.m-folder__list > div { overflow: hidden; }
+.m-folder__list a { padding-left: 18px; font-size: 1.05rem; color: var(--accent); }
+
+/* Below 800px the header collapses: burger left, wide logo centred.
+   It also shrinks to a fixed height once the page is scrolled. */
+@media (max-width: 799px) {
+  :root { --header-h: calc(43px + 12vw); }
+  body.hdr-shrink { --header-h: calc(43px + 4vh); }
+
+  .nav, .header__cta { display: none; }
+  .burger { display: block; position: absolute; left: var(--mobile-page-padding); top: 50%; transform: translateY(-50%); }
+
+  .header__inner {
+    position: relative;
+    justify-content: center;
+    padding: 0 var(--mobile-page-padding);
+  }
+  .logo { gap: 10px; }
+  .logo__mark { width: 40px; height: 40px; font-size: 16px; border-width: 1.5px; }
+  .logo__name { font-size: 15px; }
+  .logo__eyebrow { display: none; }
+  .logo__tag { font-size: 8px; letter-spacing: 0.16em; }
+}
+@media (max-width: 420px) {
+  .logo__tag { display: none; }
+  .logo__name { font-size: 13.5px; }
+}
+
+/* ==========================================================================
+   Accordion
+   ========================================================================== */
+.acc { width: 100%; }
+.acc__item { border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.acc__item:last-child { border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.acc__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+  color: inherit;
+  line-height: 1.5em;
+}
+/* the source leaves the title on the font's natural leading, not the body 1.5em */
+.acc__title { flex: 1 1 auto; line-height: normal; }
+.acc__icon {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.25s ease;
+}
+.acc__item.is-open .acc__icon { transform: rotate(-135deg) translate(-2px, -2px); }
+.acc__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.28s ease;
+}
+.acc__item.is-open .acc__panel { grid-template-rows: 1fr; }
+.acc__panel > div { overflow: hidden; }
+.acc__panel p { padding-bottom: 14px; }
+.acc__panel p:empty { display: none; }
+
+/* ==========================================================================
+   Divider / shape blocks
+   ========================================================================== */
+.hr { width: 100%; height: 1px; background: currentColor; opacity: 0.2; }
+
+/* ==========================================================================
+   Images inside blocks
+   ========================================================================== */
+/* Images are taken out of flow so they never inflate their grid row —
+   the row height alone decides the frame, exactly as on the source site. */
+.fe > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fe--contain > img { object-fit: contain; }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer { position: relative; }
+.footer .rte { text-align: center; }
+.footer a { color: var(--accent); }
+.footer a:hover { opacity: 0.7; }
+
+/* footer word-mark */
+.flogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: center;
+}
+.flogo__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border: 2px solid var(--accent);
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--accent);
+}
+.flogo__name {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: clamp(20px, 2.4vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: #fff;
+}
+.flogo__sub {
+  font-size: clamp(9px, 0.85vw, 13px);
+  letter-spacing: 0.28em;
+  color: var(--accent);
+  opacity: 0.75;
+}
+
+/* ==========================================================================
+   Project gallery (Sản phẩm & Dự án)
+   ========================================================================== */
+.cap { width: 100%; }
+.cap__title {
+  display: block;
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.cap__meta {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.65;
+}
+
+/* ==========================================================================
+   Contact details list
+   ========================================================================== */
+.info { width: 100%; }
+.info__row { padding: 14px 0; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.info__row:last-child { border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+.info__label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.info__value { display: block; font-size: 1rem; line-height: 1.5em; }
+.info__value a { text-decoration: underline; text-underline-offset: 2px; }
+
+/* embedded map */
+.map { width: 100%; height: 100%; min-height: 260px; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); }
+.map iframe { display: block; width: 100%; height: 100%; min-height: 260px; border: 0; filter: grayscale(1) contrast(1.05); }
+
+/* ==========================================================================
+   Form
+   ========================================================================== */
+.form { width: 100%; color: var(--accent); }
+.form__item { margin-bottom: 20px; }
+/* the name row carries its 20px inside the item, like the source */
+.form__item:first-child,
+.form__item:last-child { margin-bottom: 0; }
+.form__row > .form__field { margin-bottom: 20px; }
+.form__title { display: block; height: 24px; margin-bottom: 4px; font-size: 1rem; line-height: 24px; }
+
+.form__row { display: flex; gap: 10px; }
+.form__row > .form__field { flex: 1 1 0; min-width: 0; }
+
+/* Labels use the small-text size; that width is what pushes "(required)" onto
+   a second line inside the narrow first/last-name columns. min-height, not
+   height, so the label can actually grow when it wraps. */
+.form__label {
+  display: block;
+  line-height: 1em;
+  padding-bottom: 0.95em;
+  color: var(--accent);
+}
+.form__label span { opacity: 0.7; }
+
+.form input[type='text'],
+.form input[type='email'],
+.form textarea {
+  display: block;
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 24px;
+  color: var(--accent);
+  /* translucent field over the dark card, as on the source */
+  background: rgba(255, 255, 255, 0.38);
+  border: 1px solid transparent;
+  border-radius: 0;
+  padding: 5px 10px;
+}
+.form textarea { height: 100px; resize: vertical; }
+.form input:focus-visible,
+.form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* file drop zone */
+.form__hint { margin-bottom: 18px; font-size: 0.9rem; line-height: 1.5em; color: var(--accent); }
+.form__drop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 112px;
+  border: 1px dashed var(--accent);
+  font-size: 1rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+.form__plus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #000;
+  font-size: 15px;
+  line-height: 1;
+}
+.form__fileinput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form__submit { display: flex; justify-content: center; margin-top: 21px; }
+.form__note { margin-top: 14px; text-align: center; }
+.form__note[hidden] { display: none; }
+
+/* filled shape block (background card) */
+.shape { width: 100%; height: 100%; }
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+.center { text-align: center; }
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 16px 20px;
+  background: var(--accent);
+  color: #000;
+  z-index: 100;
+}
+.skip-link:focus { left: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
