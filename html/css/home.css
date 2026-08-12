@@ -9,8 +9,10 @@
 @media(min-width:768px){.b-home-eyebrow{grid-area:1/2/3/11;justify-content:flex-end}}
 .b-home-lead{grid-area:18/2/22/10;z-index:4;justify-content:flex-start}
 @media(min-width:768px){.b-home-lead{grid-area:10/2/13/12;justify-content:flex-start}}
-.b-home-cta{grid-area:22/2/24/7;z-index:7}
+.b-home-cta{grid-area:22/2/24/7;z-index:7;align-items:flex-start;gap:12px}
 @media(min-width:768px){.b-home-cta{grid-area:13/2/15/8;justify-content:center}}
+.hero-hotline{color:#fff;font-family:var(--body-font);font-weight:600;text-decoration:none;letter-spacing:.02em}
+.hero-hotline:hover,.hero-hotline:focus-visible{color:var(--accent);text-decoration:underline}
 
 .s-home-1{padding-bottom:6vw}
 .s-home-1 > .sec-divider{height:6vw}

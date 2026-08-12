@@ -115,6 +115,8 @@
   --mobile-page-padding: 6vw;
   --max-page-width: 1800px;
   --gap: 11px;
+  --header-lead-in: 10vw;
+  --header-cluster-gap: calc(var(--gap) * 2);
 
   --accent: #d9d9d9;
   --white: #fff;
@@ -429,7 +431,7 @@ main > .sec:first-child { padding-top: var(--header-h); }
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-left: 10vw;
+  padding-left: var(--header-lead-in);
 }
 .nav__item + .nav__item { margin-left: 5vw; }
 .nav__link,
@@ -476,7 +478,25 @@ main > .sec:first-child { padding-top: var(--header-h); }
 }
 .nav__folder a:hover { color: var(--accent); }
 
-.header__cta { flex: 0 0 auto; margin-left: 10vw; }
+/* Đặt cạnh nút CTA (không phải trong .nav) nhưng vẫn cùng hàng nhờ kế thừa
+   align-items: center từ .header__inner; kiểu chữ/hover/active dùng chung
+   với .nav__link để đồng bộ với các mục điều hướng khác. Cách xa nhóm
+   nav__item bằng chính khoảng lead-in mà .nav dùng để tách khỏi logo, để
+   cụm VI/EN + CTA rõ ràng đứng tách biệt thay vì dính vào menu. */
+.nav__item--lang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-left: var(--header-lead-in);
+}
+.nav__item--lang .nav__link { padding: 1.6px 0; }
+.nav__item--lang .nav__link:not(.nav__link--active) { opacity: 0.55; }
+.nav__item--lang .nav__link:not(.nav__link--active):hover { opacity: 0.85; }
+.nav__lang-sep { color: #fff; opacity: 0.35; }
+
+.header__cta { flex: 0 0 auto; margin-left: var(--header-cluster-gap); }
 
 /* burger */
 .burger {
@@ -537,6 +557,23 @@ body.menu-open { overflow: hidden; }
   transition: transform 0.2s ease;
 }
 .m-folder.is-open .m-folder__btn::after { transform: rotate(-135deg); }
+
+.m-lang-switch {
+  display: flex;
+  gap: 18px;
+  padding: 18px 0 4px;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+.m-lang-switch a {
+  display: inline-block;
+  width: auto;
+  padding: 0;
+  border-bottom: none;
+  color: #fff;
+  opacity: 0.55;
+}
+.m-lang-switch a[aria-current="true"] { opacity: 1; border-bottom: 1px solid currentColor; }
 .m-folder__list {
   display: grid;
   grid-template-rows: 0fr;
@@ -552,7 +589,7 @@ body.menu-open { overflow: hidden; }
   :root { --header-h: calc(43px + 12vw); }
   body.hdr-shrink { --header-h: calc(43px + 4vh); }
 
-  .nav, .header__cta { display: none; }
+  .nav, .header__cta, .nav__item--lang { display: none; }
   .burger { display: block; position: absolute; left: var(--mobile-page-padding); top: 50%; transform: translateY(-50%); }
 
   .header__inner {

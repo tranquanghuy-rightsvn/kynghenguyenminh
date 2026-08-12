@@ -90,6 +90,9 @@
     fitScaledText();
     // re-fit once webfonts land, since metrics change
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitScaledText);
+    // re-fit once i18n.js swaps in the translated text (arrives async, after
+    // the first measurement above)
+    document.addEventListener('i18n:applied', fitScaledText);
     var t;
     window.addEventListener('resize', function () {
       clearTimeout(t);
