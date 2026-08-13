@@ -82,7 +82,8 @@
       range.selectNodeContents(el);
       var natural = range.getBoundingClientRect().width;
       if (!natural) return;
-      el.style.fontSize = ((100 * avail) / natural).toFixed(2) + 'px';
+      var fitScale = parseFloat(getComputedStyle(wrap).getPropertyValue('--fit-scale')) || 1;
+      el.style.fontSize = ((100 * avail * fitScale) / natural).toFixed(2) + 'px';
     });
   }
 
