@@ -115,7 +115,7 @@
   --mobile-page-padding: 6vw;
   --max-page-width: 1800px;
   --gap: 11px;
-  --header-lead-in: 10vw;
+  --header-lead-in: clamp(32px, 4vw, 80px);
   --header-cluster-gap: calc(var(--gap) * 2);
   --float-btn-size: 52px;
   --float-btn-size-mobile: 44px;
@@ -393,7 +393,7 @@ main > .sec:first-child { padding-top: var(--header-h); }
 
 /* Word-mark lockup — set in the page's own webfonts so the Vietnamese
    diacritics render correctly at any size (no bitmap logo to go fuzzy). */
-.logo { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; color: #fff; }
+.logo { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; color: #fff; }
 .logo__main { display: flex; align-items: center; gap: 16px; }
 .logo__mark {
   flex: 0 0 auto;
@@ -410,15 +410,17 @@ main > .sec:first-child { padding-top: var(--header-h); }
   line-height: 1;
   color: var(--accent);
 }
-.logo__lines { display: flex; flex-direction: column; gap: 8px; }
+.logo__lines { display: flex; flex-direction: column; gap: 4px; }
 .logo__eyebrow,
-.logo__tag {
+.logo__tag,
+.logo__address {
   line-height: 1.2;
   color: var(--accent);
   opacity: 0.75;
   white-space: nowrap;
 }
 .logo__eyebrow { font-size: 10px; letter-spacing: 0.2em; line-height: 1.35; }
+.logo__address { font-size: 10px; letter-spacing: 0.01em; opacity: 0.72; }
 .logo__tag { margin-left: 0; font-size: 17px; letter-spacing: 0; font-weight: 800; opacity: 1; }
 .logo__name {
   font-family: var(--heading-font);
@@ -436,7 +438,7 @@ main > .sec:first-child { padding-top: var(--header-h); }
   justify-content: flex-end;
   padding-left: var(--header-lead-in);
 }
-.nav__item + .nav__item { margin-left: 5vw; }
+.nav__item + .nav__item { margin-left: clamp(28px, 3.5vw, 72px); }
 .nav__link,
 .nav__folder-btn {
   display: inline-block;
@@ -605,6 +607,7 @@ body.menu-open { overflow: hidden; }
   .logo__mark { width: 40px; height: 40px; font-size: 16px; border-width: 1.5px; }
   .logo__name { font-size: 18px; }
   .logo__eyebrow { display: none; }
+  .logo__address { display: none; }
   .logo__tag { margin-left: 0; font-size: 12px; letter-spacing: 0; }
 }
 @media (max-width: 420px) {
