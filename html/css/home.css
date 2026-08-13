@@ -9,9 +9,10 @@
 @media(min-width:768px){.b-home-eyebrow{grid-area:1/2/3/11;justify-content:flex-end}}
 .b-home-lead{grid-area:18/2/22/10;z-index:4;justify-content:flex-start}
 @media(min-width:768px){.b-home-lead{grid-area:10/2/13/12;justify-content:flex-start}}
-.b-home-cta{grid-area:22/2/24/7;z-index:7;align-items:flex-start;gap:12px}
-@media(min-width:768px){.b-home-cta{grid-area:13/2/15/8;justify-content:center}}
-.hero-hotline{color:#fff;font-family:var(--body-font);font-weight:600;text-decoration:none;letter-spacing:.02em}
+.b-home-cta{grid-area:22/2/24/10;z-index:7;align-items:flex-start;gap:12px}
+@media(min-width:768px){.b-home-cta{grid-area:13/2/15/12;justify-content:center}}
+.b-home-cta > .btn{height:auto;min-height:52px;padding:16px 1.3em}
+.hero-hotline{color:#fff;font-family:var(--body-font);font-size:clamp(1.25rem,1.6vw,1.75rem);font-weight:800;line-height:1.2;text-decoration:none;letter-spacing:.02em;white-space:nowrap}
 .hero-hotline:hover,.hero-hotline:focus-visible{color:var(--accent);text-decoration:underline}
 
 .s-home-1{padding-bottom:6vw}

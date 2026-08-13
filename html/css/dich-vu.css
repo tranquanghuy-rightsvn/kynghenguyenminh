@@ -1,10 +1,7 @@
-/* Dịch vụ — vị trí các khối trên lưới fluid */
-.s-dich-vu-0{padding-bottom:12vw}
-.s-dich-vu-0 > .sec-divider{height:12vw}
-.s-dich-vu-0 .sec-divider__fill{fill:#000}
-.s-dich-vu-0 .sec-divider__line{stroke-width:15.0px}
-.s-dich-vu-0 .fluid{grid-template-rows:repeat(37,minmax(24px,auto))}
-@media(min-width:768px){.s-dich-vu-0 .fluid{grid-template-rows:repeat(41,minmax(calc(var(--container-width)*0.0215),auto))}}
+/* Dịch vụ (Sơn tĩnh điện) — vị trí các khối trên lưới fluid */
+.s-dich-vu-0{padding-bottom:6vw}
+.s-dich-vu-0 .fluid{grid-template-rows:repeat(26,minmax(24px,auto))}
+@media(min-width:768px){.s-dich-vu-0 .fluid{grid-template-rows:repeat(24,minmax(calc(var(--container-width)*0.0215),auto))}}
 .s-dich-vu-0 > .wrap{padding:0 0}
 .b-dv-hero img{object-position:50% 50%}
 .b-dv-hero{grid-area:1/1/10/11;z-index:1}
@@ -13,30 +10,34 @@
 @media(min-width:768px){.b-dv-h3{grid-area:16/3/18/25;justify-content:center}}
 .b-dv-text{grid-area:12/2/26/10;z-index:4;justify-content:flex-start}
 @media(min-width:768px){.b-dv-text{grid-area:18/3/24/25;justify-content:center}}
-.b-dv-img2 img{object-position:50% 50%}
-.b-dv-img2{grid-area:26/2/31/10;z-index:3}
-@media(min-width:768px){.b-dv-img2{grid-area:25/3/40/15;justify-content:center}}
-.b-dv-h3b{grid-area:31/2/33/10;z-index:8}
-@media(min-width:768px){.b-dv-h3b{grid-area:25/16/27/25;justify-content:center}}
-.b-dv-textb{grid-area:33/2/38/10;z-index:9;justify-content:flex-start}
-@media(min-width:768px){.b-dv-textb{grid-area:27/16/40/25;justify-content:center}}
 
-.s-dich-vu-1{padding-bottom:12vw}
-.s-dich-vu-1 > .sec-divider{height:12vw}
+.s-dich-vu-1{padding-bottom:6vw}
+.s-dich-vu-1 > .sec-divider{height:6vw}
 .s-dich-vu-1 .sec-divider__fill{fill:#fff}
 .s-dich-vu-1 .sec-divider__line{stroke-width:15.0px}
-.s-dich-vu-1 .fluid{grid-template-rows:repeat(8,minmax(24px,auto))}
-@media(min-width:768px){.s-dich-vu-1 .fluid{grid-template-rows:repeat(10,minmax(calc(var(--container-width)*0.0215),auto))}}
-.b-dv-img3 img{object-position:50% 50%}
-.b-dv-img3{grid-area:1/2/7/10;z-index:2}
-@media(min-width:768px){.b-dv-img3{grid-area:2/4/11/13;justify-content:center}}
-.b-dv-sticky{grid-area:7/2/9/10;z-index:1;justify-content:flex-start}
-@media(min-width:768px){.b-dv-sticky{grid-area:2/14/11/25;justify-content:flex-start}}
+.s-dich-vu-1 .fluid{grid-template-rows:repeat(31,minmax(24px,auto))}
+@media(min-width:768px){.s-dich-vu-1 .fluid{grid-template-rows:repeat(21,minmax(calc(var(--container-width)*0.0215),auto))}}
+.b-dv-steps{grid-area:2/2/22/10;z-index:2;justify-content:flex-start}
+@media(min-width:768px){.b-dv-steps{grid-area:3/16/20/26;justify-content:flex-start}}
+.b-dv-steps-img img{object-position:50% 50%}
+.b-dv-steps-img{grid-area:23/1/32/11}
+@media(min-width:768px){.b-dv-steps-img{grid-area:3/2/20/15;justify-content:center}}
 
 .s-dich-vu-2{padding-bottom:8vw}
 .s-dich-vu-2 > .sec-divider{height:8vw}
 .s-dich-vu-2 .sec-divider__fill{fill:#000}
 .s-dich-vu-2 .fluid{grid-template-rows:repeat(3,minmax(24px,auto))}
 @media(min-width:768px){.s-dich-vu-2 .fluid{grid-template-rows:repeat(23,minmax(calc(var(--container-width)*0.0215),auto))}}
-.b-dv-nganh{grid-area:1/2/3/10;z-index:2;justify-content:flex-start}
-@media(min-width:768px){.b-dv-nganh{grid-area:1/2/24/26;justify-content:flex-start}}
+.b-dv-finish{grid-area:1/2/3/10;z-index:2;justify-content:flex-start}
+@media(min-width:768px){.b-dv-finish{grid-area:1/2/24/26;justify-content:flex-start}}
+
+.s-dich-vu-3{padding-bottom:6vw}
+.s-dich-vu-3 > .sec-divider{height:6vw}
+.s-dich-vu-3 .sec-divider__fill{fill:#fff}
+.s-dich-vu-3 .sec-divider__line{stroke-width:15.0px}
+.s-dich-vu-3 .fluid{grid-template-rows:repeat(8,minmax(24px,auto))}
+@media(min-width:768px){.s-dich-vu-3 .fluid{grid-template-rows:repeat(10,minmax(calc(var(--container-width)*0.0215),auto))}}
+.b-dv-cta{grid-area:1/2/6/10;z-index:2;justify-content:flex-start}
+@media(min-width:768px){.b-dv-cta{grid-area:2/2/8/26;justify-content:flex-start}}
+.b-dv-cta-btn{grid-area:7/2/9/10;z-index:1}
+@media(min-width:768px){.b-dv-cta-btn{grid-area:8/10/10/18;justify-content:center}}
