@@ -91,9 +91,6 @@
     fitScaledText();
     // re-fit once webfonts land, since metrics change
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitScaledText);
-    // re-fit once i18n.js swaps in the translated text (arrives async, after
-    // the first measurement above)
-    document.addEventListener('i18n:applied', fitScaledText);
     var t;
     window.addEventListener('resize', function () {
       clearTimeout(t);
@@ -176,17 +173,107 @@
   }
 
   /* ---------- Biểu mẫu báo giá ----------
-     Site tĩnh, không có back end: khi bấm gửi chỉ hiện thông báo kèm địa chỉ
-     email để khách liên hệ trực tiếp. */
+     Gửi thẳng tới Web App Google Apps Script bằng fetch(). Content-Type
+     text/plain giữ request ở dạng "simple request" để trình duyệt không tự
+     thêm OPTIONS preflight (GAS không xử lý được OPTIONS). */
+  var CMS_SUBMIT_URL = 'REPLACE_WITH_GAS_WEBAPP_EXEC_URL';
+  var MAX_FILE_BYTES = 8 * 1024 * 1024;
+  var FORM_MSG = {
+    vi: { ok: 'Đã gửi yêu cầu. Chúng tôi sẽ liên hệ lại sớm nhất.', fail: 'Không gửi được yêu cầu, vui lòng thử lại.', big: 'File đính kèm quá lớn (tối đa 8MB).', read: 'Không đọc được file.' },
+    en: { ok: 'Your request has been sent. We will get back to you soon.', fail: 'Could not send your request, please try again.', big: 'Attached file is too large (max 8MB).', read: 'Could not read the file.' }
+  };
+
   var form = document.querySelector('.form');
   if (form) {
+    var note = form.querySelector('.form__note');
+    var submitBtn = form.querySelector('.form__submit .btn');
+    var msg = FORM_MSG[document.documentElement.lang] || FORM_MSG.vi;
+
+    function setNote(text, isError) {
+      if (!note) return;
+      note.textContent = text;
+      note.classList.toggle('form__note--error', !!isError);
+      note.hidden = false;
+      note.focus && note.focus();
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function () { resolve(reader.result); };
+        reader.onerror = function () { reject(new Error(msg.read)); };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function compressImageFile(file) {
+      return readFileAsDataUrl(file).then(function (dataUrl) {
+        return new Promise(function (resolve) {
+          var img = new Image();
+          img.onload = function () {
+            var maxSide = 1600;
+            var scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+            var canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, Math.round(img.width * scale));
+            canvas.height = Math.max(1, Math.round(img.height * scale));
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', 0.85));
+          };
+          img.onerror = function () { resolve(dataUrl); };
+          img.src = dataUrl;
+        });
+      });
+    }
+
+    function buildFilePayload() {
+      var fileInput = form.querySelector('#q-file');
+      var file = fileInput && fileInput.files && fileInput.files[0];
+      if (!file) return Promise.resolve(null);
+      if (file.size > MAX_FILE_BYTES) {
+        return Promise.reject(new Error(msg.big));
+      }
+      var prep = file.type.indexOf('image/') === 0 ? compressImageFile(file) : readFileAsDataUrl(file);
+      return prep.then(function (dataUrl) {
+        return { name: file.name, type: file.type, dataBase64: dataUrl };
+      });
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var note = form.querySelector('.form__note');
-      if (note) {
-        note.hidden = false;
-        note.focus && note.focus();
-      }
+      if (note) note.hidden = true;
+      if (form.querySelector('#q-website').value) return; // honeypot dính bẫy — im lặng, không gửi
+
+      if (submitBtn) { submitBtn.disabled = true; }
+
+      buildFilePayload().then(function (filePayload) {
+        var payload = {
+          name: form.querySelector('#q-name').value.trim(),
+          phone: form.querySelector('#q-phone').value.trim(),
+          company: form.querySelector('#q-company').value.trim(),
+          email: form.querySelector('#q-email').value.trim(),
+          subject: form.querySelector('#q-subject').value.trim(),
+          details: form.querySelector('#q-details').value.trim(),
+          page: location.pathname,
+          lang: document.documentElement.lang || 'vi',
+          file: filePayload
+        };
+        return fetch(CMS_SUBMIT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }).then(function (res) { return res.json(); });
+      }).then(function (res) {
+        if (res && res.ok) {
+          setNote(msg.ok, false);
+          form.reset();
+        } else {
+          setNote((res && res.error) || msg.fail, true);
+        }
+      }).catch(function (err) {
+        setNote(err.message || msg.fail, true);
+      }).finally(function () {
+        if (submitBtn) submitBtn.disabled = false;
+      });
     });
   }
 })();

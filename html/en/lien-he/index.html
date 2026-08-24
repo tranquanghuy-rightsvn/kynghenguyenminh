@@ -81,6 +81,10 @@
             <label class="form__drop" for="q-file"><span class="form__plus" aria-hidden="true">+</span><span data-i18n="lienhe.file_button">Choose file</span></label>
             <input id="q-file" name="file" type="file" class="form__fileinput">
           </div>
+          <div class="form__item" style="position:absolute;left:-9999px;top:-9999px;opacity:0" aria-hidden="true">
+            <label for="q-website">Website</label>
+            <input id="q-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
         </div>
         <div class="form__submit"><button class="btn" type="submit" data-i18n="lienhe.submit_btn">SEND REQUEST</button></div>
         <p class="form__note t-small" role="status" hidden data-i18n-html="lienhe.form_note_html">This is a static website; the form isn't connected to a server yet. Please send your request to <a href="mailto:Nguyenminheng.ltd@gmail.com">Nguyenminheng.ltd@gmail.com</a>.</p>
@@ -154,7 +158,7 @@
     <span class="float-contact__label" aria-hidden="true" data-i18n="common.float_phone">Gọi điện</span>
   </div>
 </div>
-<script src="../../js/i18n.js" data-root="../../i18n/" defer></script>
 <script src="../../js/main.js" defer></script>
+<script src="../../js/cms-edit.js" defer></script>
 </body>
 </html>
