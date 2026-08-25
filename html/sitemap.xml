@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://nguyenminhltd.vn/vi/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/vi/gioi-thieu/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/gioi-thieu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/gioi-thieu/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/vi/dich-vu/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/dich-vu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/services/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/dich-vu/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/vi/du-an/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/du-an/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/projects/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/du-an/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/vi/lien-he/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/lien-he/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/lien-he/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/en/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/en/about/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/gioi-thieu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/gioi-thieu/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/en/services/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/dich-vu/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/services/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/dich-vu/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/en/projects/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/du-an/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/projects/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/du-an/"/>
+  </url>
+  <url>
+    <loc>https://nguyenminhltd.vn/en/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://nguyenminhltd.vn/vi/lien-he/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nguyenminhltd.vn/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://nguyenminhltd.vn/vi/lien-he/"/>
+  </url>
+</urlset>
