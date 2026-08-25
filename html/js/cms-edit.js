@@ -27,7 +27,7 @@
     '.cms-editable{outline:1px dashed transparent;cursor:text;transition:outline-color .15s}' +
     '.cms-editable:hover{outline-color:#d62828}' +
     '.cms-editing{outline:2px solid #d62828 !important}' +
-    '.cms-img-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;' +
+    '.cms-img-overlay{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;' +
     'background:rgba(0,0,0,0);opacity:0;transition:opacity .15s,background .15s}' +
     '.cms-img-overlay:hover{opacity:1;background:rgba(0,0,0,.35)}' +
     '.cms-img-btn{background:#d62828;color:#fff;border:none;border-radius:6px;padding:8px 14px;' +
