@@ -176,7 +176,7 @@
      Gửi thẳng tới Web App Google Apps Script bằng fetch(). Content-Type
      text/plain giữ request ở dạng "simple request" để trình duyệt không tự
      thêm OPTIONS preflight (GAS không xử lý được OPTIONS). */
-  var CMS_SUBMIT_URL = 'REPLACE_WITH_GAS_WEBAPP_EXEC_URL';
+  var CMS_SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbxBN7WZXSu83KiBuUwi1n1_Q30gqOnDiN98EskcRvR8Yf2Ou25rzTe1vmEda3q2DBsd/exec';
   var MAX_FILE_BYTES = 8 * 1024 * 1024;
   var FORM_MSG = {
     vi: { ok: 'Đã gửi yêu cầu. Chúng tôi sẽ liên hệ lại sớm nhất.', fail: 'Không gửi được yêu cầu, vui lòng thử lại.', big: 'File đính kèm quá lớn (tối đa 8MB).', read: 'Không đọc được file.' },
