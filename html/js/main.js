@@ -179,9 +179,13 @@
   var CMS_SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbxBN7WZXSu83KiBuUwi1n1_Q30gqOnDiN98EskcRvR8Yf2Ou25rzTe1vmEda3q2DBsd/exec';
   var MAX_FILE_BYTES = 8 * 1024 * 1024;
   var FORM_MSG = {
-    vi: { ok: 'Đã gửi yêu cầu. Chúng tôi sẽ liên hệ lại sớm nhất.', fail: 'Không gửi được yêu cầu, vui lòng thử lại.', big: 'File đính kèm quá lớn (tối đa 8MB).', read: 'Không đọc được file.' },
-    en: { ok: 'Your request has been sent. We will get back to you soon.', fail: 'Could not send your request, please try again.', big: 'Attached file is too large (max 8MB).', read: 'Could not read the file.' }
+    vi: { ok: 'Đã gửi yêu cầu. Chúng tôi sẽ liên hệ lại sớm nhất.', fail: 'Không gửi được yêu cầu, vui lòng thử lại.', big: 'File đính kèm quá lớn (tối đa 8MB).', read: 'Không đọc được file.', type: 'Chỉ nhận file PDF hoặc hình ảnh.', chooseFile: 'Chọn tệp' },
+    en: { ok: 'Your request has been sent. We will get back to you soon.', fail: 'Could not send your request, please try again.', big: 'Attached file is too large (max 8MB).', read: 'Could not read the file.', type: 'Only PDF or image files are accepted.', chooseFile: 'Choose file' }
   };
+
+  function isAllowedFileType(file) {
+    return file.type === 'application/pdf' || file.type.indexOf('image/') === 0;
+  }
 
   var form = document.querySelector('.form');
   if (form) {
@@ -195,6 +199,29 @@
       note.classList.toggle('form__note--error', !!isError);
       note.hidden = false;
       note.focus && note.focus();
+    }
+
+    var fileInputEl = form.querySelector('#q-file');
+    var fileNameEl = form.querySelector('.form__filename');
+    if (fileInputEl && fileNameEl) {
+      fileInputEl.addEventListener('change', function () {
+        var file = fileInputEl.files && fileInputEl.files[0];
+        if (!file) { fileNameEl.textContent = msg.chooseFile; return; }
+        if (!isAllowedFileType(file)) {
+          fileInputEl.value = '';
+          fileNameEl.textContent = msg.chooseFile;
+          setNote(msg.type, true);
+          return;
+        }
+        if (file.size > MAX_FILE_BYTES) {
+          fileInputEl.value = '';
+          fileNameEl.textContent = msg.chooseFile;
+          setNote(msg.big, true);
+          return;
+        }
+        if (note) note.hidden = true;
+        fileNameEl.textContent = file.name;
+      });
     }
 
     function readFileAsDataUrl(file) {
@@ -229,6 +256,9 @@
       var fileInput = form.querySelector('#q-file');
       var file = fileInput && fileInput.files && fileInput.files[0];
       if (!file) return Promise.resolve(null);
+      if (!isAllowedFileType(file)) {
+        return Promise.reject(new Error(msg.type));
+      }
       if (file.size > MAX_FILE_BYTES) {
         return Promise.reject(new Error(msg.big));
       }
@@ -241,7 +271,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (note) note.hidden = true;
-      if (form.querySelector('#q-website').value) return; // honeypot dính bẫy — im lặng, không gửi
+      if (form.querySelector('#q-hp').value) return; // honeypot dính bẫy — im lặng, không gửi
 
       if (submitBtn) { submitBtn.disabled = true; }
 
@@ -266,6 +296,7 @@
         if (res && res.ok) {
           setNote(msg.ok, false);
           form.reset();
+          if (fileNameEl) fileNameEl.textContent = msg.chooseFile;
         } else {
           setNote((res && res.error) || msg.fail, true);
         }
