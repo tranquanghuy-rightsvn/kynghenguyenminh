@@ -903,6 +903,28 @@ body.menu-open { overflow: hidden; }
 .form__note[hidden] { display: none; }
 .form__note--error { color: #d62828; }
 
+/* Popup xác nhận gửi form thành công (thay alert() mặc định của trình duyệt) */
+.nm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.75);
+}
+.nm-modal {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 28px;
+  background: var(--black);
+  border: 1px solid var(--accent);
+  text-align: center;
+}
+.nm-modal__message { margin: 0 0 24px; color: var(--white); font-size: 1.05rem; line-height: 1.5; }
+.nm-modal__btn { padding: 12px 2.4em; }
+
 /* filled shape block (background card) */
 .shape { width: 100%; height: 100%; }
 

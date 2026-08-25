@@ -179,12 +179,41 @@
   var CMS_SUBMIT_URL = 'https://script.google.com/macros/s/AKfycbxBN7WZXSu83KiBuUwi1n1_Q30gqOnDiN98EskcRvR8Yf2Ou25rzTe1vmEda3q2DBsd/exec';
   var MAX_FILE_BYTES = 8 * 1024 * 1024;
   var FORM_MSG = {
-    vi: { ok: 'Đã gửi yêu cầu. Chúng tôi sẽ liên hệ lại sớm nhất.', fail: 'Không gửi được yêu cầu, vui lòng thử lại.', big: 'File đính kèm quá lớn (tối đa 8MB).', read: 'Không đọc được file.', type: 'Chỉ nhận file PDF hoặc hình ảnh.', chooseFile: 'Chọn tệp' },
-    en: { ok: 'Your request has been sent. We will get back to you soon.', fail: 'Could not send your request, please try again.', big: 'Attached file is too large (max 8MB).', read: 'Could not read the file.', type: 'Only PDF or image files are accepted.', chooseFile: 'Choose file' }
+    vi: { ok: 'Đã gửi yêu cầu báo giá thành công. Chúng tôi sẽ liên hệ lại sớm nhất.', fail: 'Không gửi được yêu cầu, vui lòng thử lại.', big: 'File đính kèm quá lớn (tối đa 8MB).', read: 'Không đọc được file.', type: 'Chỉ nhận file PDF hoặc hình ảnh.', chooseFile: 'Chọn tệp', confirmBtn: 'Xác nhận' },
+    en: { ok: 'Your quote request has been sent successfully. We will get back to you soon.', fail: 'Could not send your request, please try again.', big: 'Attached file is too large (max 8MB).', read: 'Could not read the file.', type: 'Only PDF or image files are accepted.', chooseFile: 'Choose file', confirmBtn: 'Confirm' }
   };
 
   function isAllowedFileType(file) {
     return file.type === 'application/pdf' || file.type.indexOf('image/') === 0;
+  }
+
+  /* Popup xác nhận đẹp thay cho alert() mặc định của trình duyệt — đóng bằng
+     nút xác nhận, click ra ngoài hoặc phím Esc. */
+  function showConfirmModal(message, confirmLabel) {
+    var overlay = document.createElement('div');
+    overlay.className = 'nm-modal-overlay';
+    overlay.innerHTML =
+      '<div class="nm-modal" role="alertdialog" aria-modal="true">' +
+        '<p class="nm-modal__message"></p>' +
+        '<button type="button" class="btn nm-modal__btn"></button>' +
+      '</div>';
+    overlay.querySelector('.nm-modal__message').textContent = message;
+    var btn = overlay.querySelector('.nm-modal__btn');
+    btn.textContent = confirmLabel;
+
+    function close() {
+      overlay.removeEventListener('click', onOverlayClick);
+      document.removeEventListener('keydown', onKeydown);
+      overlay.remove();
+    }
+    function onOverlayClick(e) { if (e.target === overlay) close(); }
+    function onKeydown(e) { if (e.key === 'Escape') close(); }
+
+    btn.addEventListener('click', close);
+    overlay.addEventListener('click', onOverlayClick);
+    document.addEventListener('keydown', onKeydown);
+    document.body.appendChild(overlay);
+    btn.focus();
   }
 
   var form = document.querySelector('.form');
@@ -294,9 +323,9 @@
         }).then(function (res) { return res.json(); });
       }).then(function (res) {
         if (res && res.ok) {
-          setNote(msg.ok, false);
           form.reset();
           if (fileNameEl) fileNameEl.textContent = msg.chooseFile;
+          showConfirmModal(msg.ok, msg.confirmBtn);
         } else {
           setNote((res && res.error) || msg.fail, true);
         }
