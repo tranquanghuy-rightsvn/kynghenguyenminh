@@ -15,6 +15,13 @@
     window.parent.postMessage(payload, '*');
   }
 
+  // Trong CMS, click vào link thật (menu, footer, CTA...) sẽ điều hướng iframe đi khỏi
+  // trang đang sửa và làm mất thay đổi chưa lưu — chặn hẳn, chuyển trang phải qua tab CMS.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (a) e.preventDefault();
+  }, true);
+
   var style = document.createElement('style');
   style.textContent =
     '.cms-editable{outline:1px dashed transparent;cursor:text;transition:outline-color .15s}' +
@@ -30,11 +37,20 @@
   function markEditable(el, attr, key) {
     el.classList.add('cms-editable');
     el.setAttribute('contenteditable', 'true');
+    var original = attr === 'data-i18n' ? el.textContent : el.innerHTML;
+    var dirty = false;
     el.addEventListener('focus', function () { el.classList.add('cms-editing'); });
     el.addEventListener('keydown', function (e) { if (e.key === 'Enter') e.preventDefault(); });
     el.addEventListener('blur', function () {
       el.classList.remove('cms-editing');
       var value = attr === 'data-i18n' ? el.textContent : el.innerHTML;
+      // Chỉ tính là "thay đổi" khi giá trị thật sự khác bản gốc — bấm vào rồi bấm ra
+      // không sửa gì không được tính, và sửa xong quay lại y bản gốc thì bỏ pending.
+      if (value === original) {
+        if (dirty) { dirty = false; post({ type: 'text-clear', key: key }); }
+        return;
+      }
+      dirty = true;
       post({ type: 'text', attr: attr, key: key, value: value });
     });
   }
